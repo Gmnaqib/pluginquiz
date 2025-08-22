@@ -1,51 +1,12 @@
 <?php
 session_start();
 
-$questionsdata = [
-    1 => [
-        'name' => "Algorithm Basics - Question 1",
-        'text' => "Which sorting algorithm has the best average-case time complexity?",
-        'answers' => [
-            ['text' => 'Bubble Sort', 'fraction' => 0.0],
-            ['text' => 'Quick Sort', 'fraction' => 1.0],
-            ['text' => 'Insertion Sort', 'fraction' => 0.0]
-        ],
-        'type' => 'multiplechoice'
-    ],
-    2 => [
-        'name' => "Algorithm Basics - Question 2",
-        'text' => "Explain how Dijkstra's algorithm works and its typical use cases.",
-        'answers' => null,
-        'type' => 'essay'
-    ],
-    3 => [
-        'name' => "Data Structures - Question 3",
-        'text' => "Which data structure uses FIFO (First-In-First-Out) principle?",
-        'answers' => [
-            ['text' => 'Stack', 'fraction' => 0.0],
-            ['text' => 'Queue', 'fraction' => 1.0],
-            ['text' => 'Tree', 'fraction' => 0.0]
-        ],
-        'type' => 'multiplechoice'
-    ],
-    4 => [
-        'name' => "Complexity - Question 4",
-        'text' => "What is the time complexity of binary search algorithm?",
-        'answers' => [
-            ['text' => 'O(n)', 'fraction' => 0.0],
-            ['text' => 'O(log n)', 'fraction' => 1.0],
-            ['text' => 'O(n^2)', 'fraction' => 0.0]
-        ],
-        'type' => 'multiplechoice'
-    ],
-    5 => [
-        'name' => "Graph Theory - Question 5",
-        'text' => "Compare and contrast BFS and DFS algorithms. Provide examples where each would be preferable.",
-        'answers' => null,
-        'type' => 'essay'
-    ]
-];
-
+$questionsdata = quizgenerator_call_quiz_api($id, $course->id, $documents);
+if (isset($questionsdata['error'])) {
+    echo $OUTPUT->notification($questionsdata['error'], 'notifyproblem');
+    echo $OUTPUT->footer();
+    exit;
+}
 $_SESSION['generated_questions'] = $questionsdata;
 ?>
 
